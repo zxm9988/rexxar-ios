@@ -219,14 +219,16 @@
     // 做个合理假设：html URL 中不应该有 query string 和 fragment。
     RXRWarnLog(@"local html 's format is not right! Url has query and fragment.");
   }
-
   // `absoluteString` 返回的是已经 escape 过的文本，这里先转换为原始文本。
   NSString *uriText = uri.absoluteString.stringByRemovingPercentEncoding;
   // 把 uri 的原始文本所有内容全部 escape。
   NSCharacterSet *set = [NSCharacterSet characterSetWithCharactersInString:@""];
   uriText = [uriText stringByAddingPercentEncodingWithAllowedCharacters:set];
-
-  return  [NSURL URLWithString:[NSString stringWithFormat:@"%@?uri=%@", htmlFileURL.absoluteString, uriText]];
+  NSString *url = [NSString stringWithFormat:@"%@",htmlFileURL.absoluteString];
+  if (uri.query.length) {
+    url = [url stringByAppendingFormat:@"?%@.hmtl",uri.query];
+  }
+  return  [NSURL URLWithString: url];
 }
 
 - (void)_rxr_resetControllerAppearance
