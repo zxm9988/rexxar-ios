@@ -226,7 +226,7 @@
   uriText = [uriText stringByAddingPercentEncodingWithAllowedCharacters:set];
   NSString *url = [NSString stringWithFormat:@"%@",htmlFileURL.absoluteString];
   if (uri.query.length) {
-    url = [url stringByAppendingFormat:@"?%@.hmtl",uri.query];
+    url = [url stringByAppendingFormat:@"?%@",uri.query];
   }
   return  [NSURL URLWithString: url];
 }
